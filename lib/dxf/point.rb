@@ -1,5 +1,7 @@
-class Point
+# frozen_string_literal: true
 
+# Represents a point in 3D space.
+class Point
   attr_accessor :x, :y, :z
 
   def initialize(x = 0.0, y = 0.0, z = 0.0)
@@ -18,5 +20,4 @@ class Point
       @y == other.y &&
       @z == other.z
   end
-
 end

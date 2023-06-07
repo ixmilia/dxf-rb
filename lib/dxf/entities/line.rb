@@ -1,20 +1,23 @@
+# frozen_string_literal: true
+
 require_relative "entity"
 require_relative "../point"
 
+# Represents a `LINE` entity.
 class Line < Entity
-
   attr_accessor :p1, :p2
 
   def initialize(p1 = Point.new(0.0, 0.0, 0.0), p2 = Point.new(0.0, 0.0, 0.0))
+    super()
     @p1 = p1
     @p2 = p2
   end
 
   def self.from_code_pairs(code_pairs, start_index)
     next_index = start_index
-    line = Line.new()
+    line = Line.new
 
-    code_pairs[start_index..-1].each_with_index do |code_pair, index|
+    code_pairs[start_index..].each_with_index do |code_pair, index|
       next_index = start_index + index + 1
 
       break if code_pair.code == 0
@@ -43,5 +46,4 @@ class Line < Entity
       super(code_pair)
     end
   end
-
 end

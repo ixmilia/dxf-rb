@@ -1,5 +1,7 @@
-class CodePair
+# frozen_string_literal: true
 
+# Represents a code/value pair.
+class CodePair
   attr_reader :code, :value
 
   def initialize(code, value)
@@ -22,8 +24,6 @@ class CodePair
     "[#{@code}/#{@value}]"
   end
 
-  private
-
   def self.parse_value(code, value)
     # switch based on the code
     case code
@@ -35,5 +35,4 @@ class CodePair
       raise "Unknown code: #{code}"
     end
   end
-
 end

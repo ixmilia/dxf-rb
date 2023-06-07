@@ -1,5 +1,7 @@
-class Entity
+# frozen_string_literal: true
 
+# Represents a graphical entity.
+class Entity
   attr_accessor :layer
 
   def initialize
@@ -17,23 +19,19 @@ class Entity
     next_index = start_index
     entities = []
 
-    code_pairs[start_index..-1].each_with_index do |code_pair, index|
+    code_pairs[start_index..].each_with_index do |code_pair, index|
       next_index = start_index + index + 1
 
-      break if code_pair.code == 0 && code_pair.value == 'ENDSEC'
+      break if code_pair.code == 0 && code_pair.value == "ENDSEC"
+      next if code_pair.code != 0
 
-      if code_pair.code == 0
-        case code_pair.value
-        when "LINE"
-          line, next_index = Line.from_code_pairs(code_pairs, next_index)
-          entities << line
-        else
-          # unknown entity type
-        end
+      case code_pair.value
+      when "LINE"
+        line, next_index = Line.from_code_pairs(code_pairs, next_index)
+        entities << line
       end
     end
 
     return entities, next_index
   end
-
 end

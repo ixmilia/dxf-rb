@@ -1,6 +1,12 @@
 AllCops:
   TargetRubyVersion: 2.6
 
+Style/NumericPredicate:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -9,5 +15,23 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/LineLength:
   Max: 120
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false

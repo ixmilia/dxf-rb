@@ -4,7 +4,6 @@ require "test_helper"
 require_relative "../lib/dxf/code_pair"
 
 class TestCodePair < Minitest::Test
-
   def test_that_code_pairs_can_be_parsed_with_trailing_newline
     code_pairs = CodePair.pairs_from_text("0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n")
     assert_equal(4, code_pairs.length)
@@ -59,5 +58,4 @@ class TestCodePair < Minitest::Test
     assert_equal(0, code_pairs[0].code)
     assert_equal("  some string  ", code_pairs[0].value)
   end
-
 end
