@@ -3,6 +3,8 @@
 require "test_helper"
 require_relative "../lib/dxf/code_pair"
 
+include Dxf
+
 class TestCodePair < Minitest::Test
   def test_that_code_pairs_can_be_parsed_with_trailing_newline
     code_pairs = CodePair.pairs_from_text("0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n")

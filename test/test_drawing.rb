@@ -3,6 +3,8 @@
 require "test_helper"
 require_relative "../lib/dxf/drawing"
 
+include Dxf
+
 class TestDrawing < Minitest::Test
   def test_that_drawing_can_be_loaded_from_code_pairs
     code_pairs = [

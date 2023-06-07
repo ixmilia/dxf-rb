@@ -5,6 +5,8 @@ require_relative "../lib/dxf/drawing"
 require_relative "../lib/dxf/entities/entity"
 require_relative "../lib/dxf/entities/line"
 
+include Dxf
+
 class TestEntities < Minitest::Test
   def load_entity(entity_type, code_pairs)
     all_code_pairs = [

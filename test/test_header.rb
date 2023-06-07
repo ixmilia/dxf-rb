@@ -3,6 +3,8 @@
 require "test_helper"
 require_relative "../lib/dxf/header"
 
+include Dxf
+
 class TestHeader < Minitest::Test
   def test_that_header_can_be_parsed
     code_pairs = [
