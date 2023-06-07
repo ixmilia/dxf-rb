@@ -20,6 +20,12 @@ class CodePair
     code_pairs
   end
 
+  def ==(other)
+    self.class == other.class &&
+      @code == other.code &&
+      @value == other.value
+  end
+
   def to_s
     "[#{@code}/#{@value}]"
   end

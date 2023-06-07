@@ -15,6 +15,16 @@ class Entity
     end
   end
 
+  def code_pairs(version)
+    code_pairs = [
+      CodePair.new(0, @type),
+      CodePair.new(8, @layer)
+    ]
+
+    code_pairs += specific_code_pairs(version)
+    code_pairs
+  end
+
   def self.section_from_code_pairs(code_pairs, start_index)
     next_index = start_index
     entities = []

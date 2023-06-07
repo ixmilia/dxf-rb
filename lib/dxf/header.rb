@@ -7,10 +7,20 @@ end
 
 # Represents the header variables of a DXF file.
 class Header
-  attr_reader :version
+  attr_accessor :version
 
   def initialize
     @version = AcadVersion::R12
+  end
+
+  def code_pairs
+    [
+      CodePair.new(0, "SECTION"),
+      CodePair.new(2, "HEADER"),
+      CodePair.new(9, "$ACADVER"),
+      CodePair.new(1, string_from_acad_version(@version)),
+      CodePair.new(0, "ENDSEC")
+    ]
   end
 
   def self.from_code_pairs(code_pairs, start_index)
@@ -47,6 +57,17 @@ class Header
       AcadVersion::R12
     when "AC1014"
       AcadVersion::R14
+    else
+      raise "Unknown acad version: #{acad_version}"
+    end
+  end
+
+  def string_from_acad_version(acad_version)
+    case acad_version
+    when AcadVersion::R12
+      "AC1009"
+    when AcadVersion::R14
+      "AC1014"
     else
       raise "Unknown acad version: #{acad_version}"
     end

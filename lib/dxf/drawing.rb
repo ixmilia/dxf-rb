@@ -9,6 +9,16 @@ class Drawing
     @entities = []
   end
 
+  def code_pairs
+    @header.code_pairs +
+      entity_code_pairs(@header.version) +
+      [CodePair.new(0, "EOF")]
+  end
+
+  def to_s
+    "#{code_pairs.map { |code_pair| "#{code_pair.code}\r\n#{code_pair.value}" }.join("\r\n")}\r\n"
+  end
+
   def self.from_code_pairs(code_pairs)
     drawing = Drawing.new
     next_index = 0
@@ -37,5 +47,20 @@ class Drawing
   def self.parse(text)
     code_pairs = CodePair.pairs_from_text(text)
     Drawing.from_code_pairs(code_pairs)
+  end
+
+  private
+
+  def entity_code_pairs(version)
+    code_pairs = [
+      CodePair.new(0, "SECTION"),
+      CodePair.new(2, "ENTITIES")
+    ]
+
+    @entities.each do |entity|
+      code_pairs += entity.code_pairs(version)
+    end
+
+    code_pairs << CodePair.new(0, "ENDSEC")
   end
 end

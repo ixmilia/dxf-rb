@@ -61,4 +61,11 @@ EOF".strip)
     drawing = Drawing.from_code_pairs(code_pairs)
     assert_equal(AcadVersion::R14, drawing.header.version)
   end
+
+  def test_that_an_ascii_file_can_be_generated
+    drawing = Drawing.new
+    ascii = drawing.to_s
+    assert(ascii.start_with?("0\r\nSECTION\r\n"))
+    assert(ascii.end_with?("0\r\nEOF\r\n"))
+  end
 end

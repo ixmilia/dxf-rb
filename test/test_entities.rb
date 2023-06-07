@@ -40,4 +40,20 @@ class TestEntities < Minitest::Test
     assert_equal(Point.new(1.0, 2.0, 3.0), line.p1)
     assert_equal(Point.new(4.0, 5.0, 6.0), line.p2)
   end
+
+  def test_that_code_pairs_can_be_generated
+    line = Line.new(Point.new(1.0, 2.0, 3.0), Point.new(4.0, 5.0, 6.0))
+    expected_code_pairs = [
+      CodePair.new(0, "LINE"),
+      CodePair.new(8, "0"),
+      CodePair.new(10, 1.0),
+      CodePair.new(20, 2.0),
+      CodePair.new(30, 3.0),
+      CodePair.new(11, 4.0),
+      CodePair.new(21, 5.0),
+      CodePair.new(31, 6.0)
+    ]
+    actual_code_pairs = line.code_pairs(AcadVersion::R12)
+    assert_equal(expected_code_pairs, actual_code_pairs)
+  end
 end
