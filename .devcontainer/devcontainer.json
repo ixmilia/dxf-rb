@@ -1,0 +1,14 @@
+{
+  "name": "Ubuntu Ruby Environment",
+  "image": "mcr.microsoft.com/devcontainers/ruby",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.Ruby"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/ruby:1": {}
+  }
+}
