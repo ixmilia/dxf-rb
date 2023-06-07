@@ -15,7 +15,7 @@ class TestDrawing < Minitest::Test
     ]
 
     drawing = Drawing.from_code_pairs(code_pairs)
-    assert_equal("AC1014", drawing.header.version)
+    assert_equal(AcadVersion::R14, drawing.header.version)
   end
 
   def test_that_drawing_can_be_parsed_from_text
@@ -32,7 +32,7 @@ AC1014
 ENDSEC
   0
 EOF".strip)
-    assert_equal("AC1014", drawing.header.version)
+    assert_equal(AcadVersion::R14, drawing.header.version)
   end
 
   def test_that_unknown_sections_are_skipped
@@ -59,6 +59,6 @@ EOF".strip)
     ]
 
     drawing = Drawing.from_code_pairs(code_pairs)
-    assert_equal("AC1014", drawing.header.version)
+    assert_equal(AcadVersion::R14, drawing.header.version)
   end
 end

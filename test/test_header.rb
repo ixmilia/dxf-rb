@@ -14,6 +14,6 @@ class TestHeader < Minitest::Test
     ]
     header, next_index = Header.from_code_pairs(code_pairs, 0)
     assert_equal(3, next_index)
-    assert_equal("AC1014", header.version)
+    assert_equal(AcadVersion::R14, header.version)
   end
 end

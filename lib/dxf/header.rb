@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module AcadVersion
-  R12 = "AC1009"
-  R14 = "AC1014"
+  R12 = 12
+  R14 = 14
 end
 
 # Represents the header variables of a DXF file.
@@ -35,7 +35,20 @@ class Header
   def set_header_variable(variable, value)
     case variable
     when "$ACADVER"
-      @version = value
+      @version = acad_version_from_string(value)
+    end
+  end
+
+  private
+
+  def acad_version_from_string(acad_version)
+    case acad_version
+    when "AC1009"
+      AcadVersion::R12
+    when "AC1014"
+      AcadVersion::R14
+    else
+      raise "Unknown acad version: #{acad_version}"
     end
   end
 end
