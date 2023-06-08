@@ -22,11 +22,11 @@ module Dxf
     end
 
     def to_s
-      "#{code_pairs.map { |code_pair| "#{code_pair.code}\r\n#{code_pair.value}" }.join("\r\n")}\r\n"
+      code_pairs.map(&:to_ascii).join("\r\n")
     end
 
     def save(path)
-      File.open(path, "w") { |file| file.write(to_s) }
+      File.write(path, to_s)
     end
 
     def self.from_code_pairs(code_pairs)

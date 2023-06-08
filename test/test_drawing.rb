@@ -3,9 +3,9 @@
 require "test_helper"
 require_relative "../lib/dxf/drawing"
 
-include Dxf
-
 class TestDrawing < Minitest::Test
+  include Dxf
+
   def test_that_drawing_can_be_loaded_from_code_pairs
     code_pairs = [
       CodePair.new(0, "SECTION"),
@@ -67,7 +67,7 @@ EOF".strip)
   def test_that_an_ascii_file_can_be_generated
     drawing = Drawing.new
     ascii = drawing.to_s
-    assert(ascii.start_with?("0\r\nSECTION\r\n"))
-    assert(ascii.end_with?("0\r\nEOF\r\n"))
+    assert(ascii.start_with?("  0\r\nSECTION\r\n"))
+    assert(ascii.end_with?("  0\r\nEOF\r\n"))
   end
 end

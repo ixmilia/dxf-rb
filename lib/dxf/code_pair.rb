@@ -27,19 +27,63 @@ module Dxf
         @value == other.value
     end
 
+    def to_ascii
+      "#{code.to_s.rjust(3)}\r\n#{value_to_ascii}\r\n"
+    end
+
     def to_s
       "[#{@code}/#{@value}]"
     end
 
     def self.parse_value(code, value)
       # switch based on the code
-      case code
-      when 0..9
+      case type_from_code(code)
+      when "string"
         value.chomp("\r")
-      when 10..59
+      when "double"
         value.strip.to_f
+      when "short", "int", "long"
+        value.strip.to_i
       else
         raise "Unknown code: #{code}"
+      end
+    end
+
+    def self.type_from_code(code)
+      case code
+      when 0..9, 300..309, 999, 1000..1009
+        "string"
+      when 10..59, 110..149, 210..239, 1010..1059
+        "double"
+      when 60..79, 170..179, 270..289, 1060..1070
+        "short"
+      when 90..99, 100..109, 1071
+        "int"
+      when 160..169
+        "long"
+      else
+        raise "Unknown code: #{@code}"
+      end
+    end
+
+    private
+
+    def value_to_ascii
+      case CodePair.type_from_code(@code)
+      when "string"
+        @value
+      when "double"
+        display = format("%.16f", @value).to_s.gsub(/0+$/, "")
+        display += "0" if display[-1] == "."
+        display
+      when "short"
+        @value.to_s.rjust(6)
+      when "int"
+        @value.to_s.rjust(9)
+      when "long"
+        @value.to_s
+      else
+        raise "Unknown code: #{@code}"
       end
     end
   end
