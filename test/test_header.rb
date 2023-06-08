@@ -22,11 +22,23 @@ class TestHeader < Minitest::Test
   def test_that_code_pairs_can_be_generated
     header = Header.new
     header.version = AcadVersion::R14
+    header.minimum_drawing_extents = Point.new(0, 0, 0)
+    header.maximum_drawing_extents = Point.new(100, 100, 0)
     expected_code_pairs = [
       CodePair.new(0, "SECTION"),
       CodePair.new(2, "HEADER"),
       CodePair.new(9, "$ACADVER"),
       CodePair.new(1, "AC1014"),
+      CodePair.new(9, "$ACADMAINTVER"),
+      CodePair.new(70, 0),
+      CodePair.new(9, "$EXTMIN"),
+      CodePair.new(10, 0.0),
+      CodePair.new(20, 0.0),
+      CodePair.new(30, 0.0),
+      CodePair.new(9, "$EXTMAX"),
+      CodePair.new(10, 100.0),
+      CodePair.new(20, 100.0),
+      CodePair.new(30, 0.0),
       CodePair.new(0, "ENDSEC")
     ]
     actual_code_pairs = header.code_pairs
