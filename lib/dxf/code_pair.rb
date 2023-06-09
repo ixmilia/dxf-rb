@@ -27,6 +27,18 @@ module Dxf
         @value == other.value
     end
 
+    def endsec?
+      code == 0 && value == "ENDSEC"
+    end
+
+    def endtab?
+      code == 0 && value == "ENDTAB"
+    end
+
+    def eof?
+      code == 0 && value == "EOF"
+    end
+
     def to_ascii
       "#{code.to_s.rjust(3)}\r\n#{value_to_ascii}\r\n"
     end

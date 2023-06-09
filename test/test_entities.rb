@@ -2,8 +2,6 @@
 
 require "test_helper"
 require_relative "../lib/dxf/drawing"
-require_relative "../lib/dxf/entities/entity"
-require_relative "../lib/dxf/entities/line"
 
 class TestEntities < Minitest::Test
   include Dxf

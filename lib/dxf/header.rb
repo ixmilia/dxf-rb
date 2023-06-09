@@ -37,23 +37,21 @@ module Dxf
       ]
     end
 
-    def self.from_code_pairs(code_pairs, start_index)
+    def self.from_code_pair_reader(code_pair_reader)
       header = Header.new
-      next_index = start_index
       last_variable_name = nil
-      code_pairs[start_index..].each_with_index do |code_pair, index|
-        next_index = start_index + index + 1
 
-        break if code_pair.code == 0 && code_pair.value == "ENDSEC"
-
-        if code_pair.code == 9
-          last_variable_name = code_pair.value
+      until code_pair_reader.current.endsec?
+        if code_pair_reader.current.code == 9
+          last_variable_name = code_pair_reader.current.value
         else
-          header.set_header_variable(last_variable_name, code_pair)
+          header.set_header_variable(last_variable_name, code_pair_reader.current)
         end
+
+        code_pair_reader.move_next
       end
 
-      return header, next_index
+      return header
     end
 
     def set_header_variable(variable, code_pair)

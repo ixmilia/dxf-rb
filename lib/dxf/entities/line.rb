@@ -24,19 +24,15 @@ module Dxf
       ]
     end
 
-    def self.from_code_pairs(code_pairs, start_index)
-      next_index = start_index
+    def self.from_code_pair_reader(code_pair_reader)
       line = Line.new
 
-      code_pairs[start_index..].each_with_index do |code_pair, index|
-        next_index = start_index + index + 1
-
-        break if code_pair.code == 0
-
-        line.try_set_code_pair(code_pair)
+      until code_pair_reader.current.code == 0
+        line.try_set_code_pair(code_pair_reader.current)
+        code_pair_reader.move_next
       end
 
-      return line, next_index
+      return arc
     end
 
     def try_set_code_pair(code_pair)

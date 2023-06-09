@@ -14,8 +14,7 @@ class TestHeader < Minitest::Test
       CodePair.new(9, "$ACADVER"), # this should be ignored because it's past [0/ENDSEC]
       CodePair.new(1, "AC1015")
     ]
-    header, next_index = Header.from_code_pairs(code_pairs, 0)
-    assert_equal(3, next_index)
+    header = Header.from_code_pair_reader(CodePairReader.new(code_pairs))
     assert_equal(AcadVersion::R14, header.version)
   end
 

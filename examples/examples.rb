@@ -1,11 +1,16 @@
-require 'dxf'
+# frozen_string_literal: true
 
-include Dxf
+require "dxf"
 
-def write_dxf_drawing
-  drawing = Drawing.new
-  drawing.entities << Line.new(Point.new(0, 0, 0), Point.new(10, 10, 0))
-  drawing.save('drawing.dxf')
+# some examples
+module Examples
+  include Dxf
+
+  def self.write_dxf_drawing
+    drawing = Drawing.new
+    drawing.entities << Line.new(Point.new(0, 0, 0), Point.new(10, 10, 0))
+    drawing.save("drawing.dxf")
+  end
 end
 
-write_dxf_drawing
+Examples.write_dxf_drawing

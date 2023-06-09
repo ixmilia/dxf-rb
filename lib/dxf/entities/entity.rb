@@ -26,24 +26,38 @@ module Dxf
       code_pairs
     end
 
-    def self.section_from_code_pairs(code_pairs, start_index)
-      next_index = start_index
+    def self.section_from_code_pair_reader(code_pair_reader)
       entities = []
 
-      code_pairs[start_index..].each_with_index do |code_pair, index|
-        next_index = start_index + index + 1
+      until code_pair_reader.current.endsec?
+        code_pair_reader.expect(0)
+        entity_type = code_pair_reader.current.value
+        code_pair_reader.move_next
 
-        break if code_pair.code == 0 && code_pair.value == "ENDSEC"
-        next if code_pair.code != 0
-
-        case code_pair.value
-        when "LINE"
-          line, next_index = Line.from_code_pairs(code_pairs, next_index)
-          entities << line
+        class_type = class_from_entity_type(entity_type)
+        if class_type.nil?
+          # skip unknown entity
+          code_pair_reader.move_next_until(0)
+        else
+          entity = class_type.new
+          until code_pair_reader.current.code == 0
+            entity.try_set_code_pair(code_pair_reader.current)
+            code_pair_reader.move_next
+          end
+          entities << entity
         end
       end
 
-      return entities, next_index
+      return entities
+    end
+
+    def self.class_from_entity_type(entity_type)
+      case entity_type
+      when "ARC"
+        Arc
+      when "LINE"
+        Line
+      end
     end
   end
 end
