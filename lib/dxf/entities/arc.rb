@@ -26,17 +26,6 @@ module Dxf
       ]
     end
 
-    def self.from_code_pair_reader(code_pair_reader)
-      arc = Arc.new
-
-      until code_pair_reader.current.code == 0
-        arc.try_set_code_pair(code_pair_reader.current)
-        code_pair_reader.move_next
-      end
-
-      return arc
-    end
-
     def try_set_code_pair(code_pair)
       case code_pair.code
       when 10
